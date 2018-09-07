@@ -202,6 +202,13 @@ class STIXQueryBuilder(STIXPatternListener):
         observation_expression = self.pop()
         self.push(Pattern(observation_expression))
 
+    def exitPropTestIsSuperset(self, ctx: STIXPatternParser.PropTestIsSupersetContext) -> None:
+        logger.debug("{} {} {}".format("exitPropTestIsSuperset", ctx, ctx.getText()))
+        value = self.pop()
+        object_path = self.pop()
+        negated = ctx.NOT()
+        self.push(ComparisonExpression(object_path, value, ComparisonComparators.IsSuperSet, negated=negated))
+
 
 # copied from CASCADE data_model (defined twice)
 class InvalidFieldError(KeyError):

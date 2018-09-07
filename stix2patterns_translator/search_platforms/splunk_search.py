@@ -117,7 +117,8 @@ class _ObservationExpressionTranslator:
         ComparisonComparators.In: encoders.set,
         ComparisonComparators.Matches: encoders.matches,
         ComparisonExpressionOperators.And: 'AND',
-        ComparisonExpressionOperators.Or: 'OR'
+        ComparisonExpressionOperators.Or: 'OR',
+        ComparisonComparators.IsSuperSet: "=",
     }
 
     def __init__(self, expression:ObservationExpression, dmm, object_scoper):
