@@ -27,7 +27,6 @@ class SplunkSearchTranslator:
                                          "| head 1 | return $_time] | where {expr1}"
     }
 
-
     def __init__(self, pattern:Pattern, data_model_mapper, object_scoper = object_scopers.default_object_scoper):
         self.dmm = data_model_mapper
         self.pattern = pattern
@@ -118,7 +117,8 @@ class _ObservationExpressionTranslator:
         ComparisonComparators.Matches: encoders.matches,
         ComparisonExpressionOperators.And: 'AND',
         ComparisonExpressionOperators.Or: 'OR',
-        ComparisonComparators.IsSuperSet: "=",
+        ComparisonComparators.IsSuperSet: "=", # Splunk cidrmatch('<ip in CIDR notation>', ip) and = operator give the same result
+        ComparisonComparators.IsSubSet: "=" # cidrmatch function can be used for both issuperset and issubset operator
     }
 
     def __init__(self, expression:ObservationExpression, dmm, object_scoper):
